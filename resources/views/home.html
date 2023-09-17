@@ -1,0 +1,21 @@
+{{ include('layout/app.html') }}
+<div class="container">
+    <h1>Simple <span class="title-test">Test</span> System</h1>
+
+    <form method="post" action="/submit" class="user-input-form">
+        <div class="input-container">
+            <input type="text" name="name" value="{{ name }}" placeholder="Enter name">
+            <small class="error">{{ errors['name'] }}</small>
+
+            <select name="test">
+                <option value="" disabled selected>Select test</option>
+                {% for test in tests %}
+                <option value="{{ test.id }}">{{ test.name }}</option>
+                {% endfor %}
+            </select>
+            <small class="error">{{ errors['test'] }}</small>
+        </div>
+
+        <button type="submit" class="button button-start">Start</button>
+    </form>
+</div>

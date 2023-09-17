@@ -1,0 +1,139 @@
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.user-input-form {
+    width: 50%;
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.input-container {
+    width: 40%;
+    margin: 0 0 20px;
+}
+
+input[type=text], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 10px 0 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.error {
+    color: firebrick;
+}
+
+.button {
+    padding: 12px 30px;
+    border-radius: 3px;
+    box-shadow: 0px 0px 12px -2px rgba(0, 0, 0, 0.5);
+    line-height: 1.25;
+    background: #FC6E51;
+    text-decoration: none;
+    color: white;
+    font-size: 14px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    position: relative;
+    transition: background-color .6s ease;
+    overflow: hidden;
+}
+
+.button:hover {
+    color: white;
+    background: #FF4500FF;
+}
+
+.button:disabled {
+    color: white;
+    background: #ccc;
+}
+
+h1 {
+    font-weight: 100;
+}
+
+.title-test {
+    color: #FF4500FF;
+    font-weight: bold;
+}
+
+.question-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 50%;
+}
+
+#question-container {
+    width: 50%;
+    text-align: center;
+}
+
+#options-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+    grid-gap: 10px;
+    margin: 20px;
+    width: 80%;
+}
+
+.option-wrapper {
+    display: flex;
+}
+
+label {
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+    width: 100%;
+    display: flex;
+    margin: 0;
+}
+
+input[type="radio"] {
+    opacity: 0;
+}
+
+input[type="radio"]:checked + label {
+    border: 2px solid #FC6E51;
+}
+
+#progress-container {
+    margin: 20px 0;
+    border: 1px solid #ccc;
+    width: 30%;
+    border-radius: 10px;
+    height: 20px;
+}
+
+#progress-bar {
+    height: 20px;
+    border-radius: 10px;
+    background: #FF4500FF;
+}
+
+.result-container {
+    text-align: center;
+    margin: 20px 0;
+}

@@ -1,0 +1,120 @@
+{{ include('layout/app.html') }}
+<div class="container">
+    <div id="question-container">
+        <h1 id="question-text"></h1>
+    </div>
+
+    <form method="post" action="/test-done" class="question-form">
+        <div id="options-container">
+            <!-- Clickable options will be added here -->
+        </div>
+
+        <button id="next-button" class="button" disabled>Next</button>
+    </form>
+
+    <div id="progress-container">
+        <div id="progress-bar"></div>
+    </div>
+
+</div>
+
+<script>
+    // Parse the questions array form twig template to a JavaScript object
+    const questionsObject = JSON.parse('{{ questions|json_encode|raw }}');
+    let questions = Object.values(questionsObject);
+
+    // Initialize variables
+    let currentQuestionIndex = 0;
+    const questionTextElement = document.getElementById('question-text');
+    const optionsContainer = document.getElementById('options-container');
+    const nextButton = document.getElementById('next-button');
+
+    // Function to display options for the current question
+    function displayOptionsForCurrentQuestion() {
+        const question = questions[currentQuestionIndex];
+        questionTextElement.textContent = question.question_text;
+
+        // Clear previous options
+        optionsContainer.innerHTML = '';
+
+        question.answer_options.forEach((option, index) => {
+            // Create a container div for the option
+            const optionContainer = document.createElement('div');
+            optionContainer.classList.add('option-wrapper');
+
+            // Create the radio input
+            const optionRadio = document.createElement('input');
+            optionRadio.type = 'radio';
+            optionRadio.name = 'answer'; // Set the same name for all radio inputs in a question
+            optionRadio.id = `option-${index}`;
+            optionRadio.value = option.option_text;
+
+            optionRadio.addEventListener('change', () => {
+                // Enable the "Next" button when an option is selected
+                nextButton.removeAttribute('disabled');
+                checkAnswer(option, question);
+            });
+
+            // Create the label for the radio input
+            const optionLabel = document.createElement('label');
+            optionLabel.setAttribute('for', `option-${index}`);
+            optionLabel.textContent = option.option_text;
+
+            // Append the radio input and label to the container
+            optionContainer.appendChild(optionRadio);
+            optionContainer.appendChild(optionLabel);
+
+            // Append the option container to the main options container
+            optionsContainer.appendChild(optionContainer);
+        });
+    }
+
+    // Function to handle the "Next" button click
+    function handleNextButtonClick() {
+        currentQuestionIndex++;
+
+        // Check if there are more questions
+        if (currentQuestionIndex < questions.length) {
+            displayOptionsForCurrentQuestion();
+            nextButton.setAttribute('disabled', 'disabled');
+            // Send the selected answer to the server using Axios
+            updateProgressBar();
+        }
+    }
+
+    function checkAnswer(selectedOption, question) {
+        nextButton.removeAttribute('disabled');
+        sendAnswerToServer(selectedOption, question);
+    }
+
+    // Function to send the selected answer to the server using Axios
+    function sendAnswerToServer(answer, question) {
+        // Encode the answer ID and question ID as query parameters
+        const queryParams = `${encodeURIComponent(answer.question_answer_option_id)}`;
+
+        // Include the query parameter in the URL
+        const url = `/submit-answer/${question.question_id}/${queryParams}`;
+
+        axios.get(url)
+            .then(function (response) {
+                console.log(response.status);
+            })
+            .catch(function (error) {
+                // Handle Axios error
+                console.error(error);
+            });
+    }
+
+    // Function to update the progress bar
+    function updateProgressBar() {
+        const progress = (currentQuestionIndex / questions.length) * 100;
+        document.getElementById('progress-bar').style.width = progress + '%';
+    }
+
+    // Add a click event listener to the "Next" button
+    nextButton.addEventListener('click', handleNextButtonClick);
+
+    // Display the first question
+    displayOptionsForCurrentQuestion();
+    updateProgressBar();
+</script>
