@@ -8,7 +8,7 @@ class MysqlTestRepository implements TestRepository
 {
     public function index()
     {
-       return Database::connection()
+        return Database::connection()
             ->createQueryBuilder()
             ->select('*')
             ->from('tests')
@@ -42,6 +42,7 @@ class MysqlTestRepository implements TestRepository
 
     public function submitAnswer(array $vars)
     {
+        // If user already answered to certain question, update the answer without creating new entry.
         $existingAnswer = Database::connection()
             ->createQueryBuilder()
             ->select('*')

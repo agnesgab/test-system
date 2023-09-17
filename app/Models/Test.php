@@ -28,9 +28,4 @@ class Test
     {
         return $this->id;
     }
-
-    public function getQuestions()
-    {
-
-    }
 }

@@ -32,7 +32,7 @@ class TestController
             $testId = $response->getTestId();
 
             if (!$questions) {
-                // No questions available, throw an exception
+                // If no questions are available, throw an exception
                 throw new \Error('No questions available for this test.');
             }
 
