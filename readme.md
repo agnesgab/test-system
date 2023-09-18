@@ -12,7 +12,7 @@ Project is created with:
 $ composer install
 ```
 **2. set up database:** <br>
-[Database](app/Database.php) - provide connection parameters - 'dbname', 'user', 'password' <br>
+[Database](app/Database.php) - provide connection parameters - 'dbname', 'user', 'password', 'host'<br>
 [Database Schema ](schema.sql) can be found here <br>
 
 **3. open project locally, e.g.**
